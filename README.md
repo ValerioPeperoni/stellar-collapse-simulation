@@ -78,7 +78,7 @@ collasso/
 ├── tov.py                        Integrazione equazione TOV, limite di Oppenheimer-Volkoff
 ├── remnant.py                    Classificazione remnant (white_dwarf / neutron_star / black_hole)
 ├── pipeline.py                   Orchestrazione pura (run_full_simulation), nessun I/O
-└── visualization.py               Animazione GIF + grafico riassuntivo PNG
+└── visualization.py               Animazioni GIF (a linea + disco 2D per densita') + grafico riassuntivo PNG
 
 scripts/
 ├── run_simulation.py            ENTRY POINT UNICO — simulazione completa, numerico + visivo
@@ -87,7 +87,7 @@ scripts/
 data/
 └── progenitors_reference.csv    Catalogo: 6 stelle + 1 proxy, massa nucleo e Ye da letteratura reale
 
-tests/                           102 test, un file per modulo
+tests/                           105 test, un file per modulo
 docs/img/                        Immagini di esempio per questo README
 
 STATUS.md          Log dettagliato di ogni ciclo di sviluppo
@@ -106,7 +106,7 @@ source .venv/Scripts/activate   # Windows (Git Bash); su Linux/Mac: source .venv
 pip install -r requirements.txt
 ```
 
-Dipendenze: `numpy`, `scipy`, `matplotlib`, `pytest`.
+Dipendenze: `numpy`, `scipy`, `matplotlib`, `pytest`, `rich` (formattazione dell'output da terminale).
 
 ## Come eseguire la simulazione
 
@@ -118,8 +118,11 @@ dove `<star_id>` è uno tra `s15`, `s20`, `s25`, `s30`, `s35`, `s40`, `betelgeus
 
 Ogni esecuzione produce **sia** l'output numerico completo **sia** una visualizzazione:
 
-- **A stdout**: profilo di equilibrio iniziale, dinamica del collasso (tempo e causa dell'evento terminale), bilancio energetico, massa di Chandrasekhar, limite TOV per SLy e APR4, classificazione del remnant, e gli 8 limiti del modello (sempre stampati, mai omessi).
-- **Su disco** (cartella `output/`, creata automaticamente): `collapse_<star_id>.gif` (animazione dell'evoluzione radiale) e `summary_<star_id>.png` (grafico a 3 pannelli: densità centrale vs tempo, velocità della shell più interna vs tempo, curva massa-raggio TOV con la massa del nucleo marcata).
+- **A stdout** (formattato con `rich`: pannelli, tabelle, colori): profilo di equilibrio iniziale, dinamica del collasso (tempo e causa dell'evento terminale), bilancio energetico, massa di Chandrasekhar, limite TOV per SLy e APR4, classificazione del remnant, e gli 8 limiti del modello (9 per `betelgeuse`, sempre stampati, mai omessi).
+- **Su disco** (cartella `output/`, creata automaticamente), tre file:
+  - `collapse_<star_id>.gif` — animazione a linea (raggio di ogni shell vs frazione di massa racchiusa).
+  - `collapse_disk_<star_id>.gif` — animazione **alternativa**: la stella disegnata come un disco 2D pieno, colorato per densità locale di shell (scala log), che si restringe nel tempo — pensata per dare l'impressione visiva di una stella che collassa, non di un grafico a linea. L'ultimo fotogramma dichiara esplicitamente, in sovrimpressione, che la simulazione termina lì e che nessun bounce è modellato.
+  - `summary_<star_id>.png` — grafico a 3 pannelli: densità centrale vs tempo, velocità della shell più interna vs tempo, curva massa-raggio TOV con la massa del nucleo marcata.
 
 ## Esempio di output
 
@@ -165,7 +168,7 @@ Oltre all'entry point unico, `scripts/` contiene sei script demo storici, uno pe
 pytest -q
 ```
 
-102 test, un file per modulo (`tests/test_<modulo>.py`), copertura completa di ogni componente fisico e dell'orchestrazione (incluso il catalogo esteso a 6 stelle e la voce proxy `betelgeuse`).
+105 test, un file per modulo (`tests/test_<modulo>.py`), copertura completa di ogni componente fisico e dell'orchestrazione (incluso il catalogo esteso a 6 stelle, la voce proxy `betelgeuse`, e le due animazioni di `collasso.visualization`).
 
 ## Validazione
 

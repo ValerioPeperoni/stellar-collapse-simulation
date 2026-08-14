@@ -3783,4 +3783,78 @@ README aggiornato, licenza MIT aggiunta (nome del titolare da inserire).
 Step 9 pronto per la chiusura, in attesa della decisione dell'utente su
 `git init`/pubblicazione GitHub — nessun push senza conferma esplicita
 (CLAUDE.md).
+
+## Ciclo "Pubblicazione GitHub + correzioni + estetica" — 2026-08-14
+
+**Pubblicazione GitHub**: `git init`, verificato `.gitignore` (esclude
+correttamente `.venv/`, `__pycache__/`, `.pytest_cache/`, `output/` —
+confermato con `git status --ignored`), primo commit (46 file, nessun
+file sensibile). Bloccato temporaneamente dall'identita' git mancante
+(non modificata autonomamente, per regola — l'utente l'ha impostata con
+`git config --global`). Collegato il remote
+(github.com/ValerioPeperoni/stellar-collapse-simulation); primo push
+respinto non per autenticazione ma perche' il repo GitHub aveva gia' un
+commit (README stub auto-generato, un solo file) — mostrato il contenuto
+del remoto all'utente prima di agire, poi force push dopo conferma
+esplicita. Verificato: remoto allineato al locale.
+
+**Correzioni minori** (commit separato): rimosse le parentesi quadre
+placeholder dal copyright in LICENSE ("[Valerio Peperoni]" -> "Valerio
+Peperoni"), aggiornata la sezione Licenza del README che descriveva
+ancora un placeholder da sostituire.
+
+**Miglioramenti estetici** (richiesta esplicita dell'utente: "nessuna
+modifica alla fisica o ai test esistenti", solo impatto visivo):
+
+1. **Nuova animazione 2D** (`collasso.visualization.animate_collapse_disk`,
+   nuovo, si AFFIANCA a `animate_collapse` senza sostituirla): la stella
+   disegnata come un disco 2D pieno, colorato per densita' locale di
+   shell (scala log, colormap "inferno"), che si restringe nel tempo
+   usando ESATTAMENTE i raggi di shell gia' calcolati da
+   `collasso.dynamics` (`CollapseSolution.r_cm`) — nessun nuovo calcolo
+   dinamico, solo una densita' per shell derivata
+   (`_shell_densities_gcm3`, stessa formula gia' usata in
+   `_shell_dvdt`, duplicata qui SOLO per il colore) e usata unicamente
+   per la resa visiva. Implementata disegnando cerchi pieni concentrici
+   dalla shell piu' esterna a quella piu' interna (zorder crescente),
+   senza costruire vere corone circolari. L'ULTIMO fotogramma include un
+   testo esplicito sovrapposto (costante di modulo
+   `TESTO_FINE_SIMULAZIONE`, testabile direttamente) che dichiara la
+   fine della simulazione e l'assenza di un bounce modellato — stesso
+   limite gia' dichiarato nel disclaimer 4, qui reso visivamente
+   esplicito. Verificata visivamente (frame iniziale/centrale/finale
+   estratti e ispezionati): gradiente di densita' liscio dal centro
+   verso il bordo, restringimento chiaramente visibile, testo finale
+   leggibile. File separato (`collapse_disk_<star_id>.gif`), generato
+   in aggiunta a `collapse_<star_id>.gif` (non lo sostituisce).
+
+2. **Output da terminale riformattato con `rich`** (nuova dipendenza,
+   aggiunta a `requirements.txt`): `scripts/run_simulation.py` riscritto
+   per usare `rich.console.Console`/`Panel`/`Table` al posto di `print()`
+   con separatori "=" — stesso identico contenuto numerico di prima
+   (nessuna cifra omessa, arrotondata diversamente o aggiunta), solo
+   presentazione a pannelli/tabelle con intestazioni ed evidenziazione a
+   colori (verde per collasso avvenuto, giallo per i disclaimer/casi
+   collapsed=False). Corretto un em-dash Unicode nel titolo che causava
+   mojibake su terminale non-UTF8 (il progetto usa sempre ASCII puro
+   nell'output, es. "e'" invece di "è" — convenzione seguita anche qui).
+
+**File modificati/creati**: `collasso/visualization.py` (nuova funzione
++ costante + helper), `tests/test_visualization.py` (3 nuovi test),
+`scripts/run_simulation.py` (riscritto per `rich` + terza animazione),
+`requirements.txt` (+`rich`), `README.md` (sezioni aggiornate),
+`LICENSE`, `.git/` (repo pubblicato).
+
+**Verifica finale**: `pyflakes` pulito; suite completa rieseguita dopo
+tutte le modifiche — **105/105 test passano** (102 + 3 nuovi in
+`tests/test_visualization.py`: GIF del disco non vuota, testo di fine
+simulazione, sanita' della densita' di shell derivata); `python scripts/
+run_simulation.py s20`/`s15` rieseguiti con successo, output verificato
+visivamente (screenshot dei frame della nuova animazione, terminale
+riformattato).
+
+**Stato progetto**: progetto pubblicato su GitHub, licenza MIT
+completa, output visivo e testuale migliorati senza toccare fisica o
+test esistenti. Nessuna modifica fisica in questo ciclo (puramente
+estetico, come richiesto esplicitamente).
 </content>
