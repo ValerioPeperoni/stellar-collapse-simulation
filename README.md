@@ -126,6 +126,12 @@ Ogni esecuzione produce **sia** l'output numerico completo **sia** una visualizz
 
 ## Esempio di output
 
+**Animazione 2D del collasso** (`collapse_disk_<star_id>.gif`, s20) — la stella come disco pieno colorato per densità di shell, che si restringe nel tempo; l'ultimo fotogramma dichiara esplicitamente l'assenza di un bounce modellato:
+
+![Animazione 2D del collasso per s20: disco colorato per densità che si restringe nel tempo](docs/img/collapse_disk_s20.gif)
+
+**Grafico riassuntivo a 3 pannelli** (`summary_<star_id>.png`, s20):
+
 ![Esempio di grafico riassuntivo per s20](docs/img/summary_s20.png)
 
 Estratto reale (non l'intero output) da `python scripts/run_simulation.py s20`:
