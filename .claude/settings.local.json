@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c \"import numpy, scipy, matplotlib, pandas; print\\('ok'\\)\")",
+      "Bash(py --version)",
+      "Bash(py -3 -c \"import sys; print\\(sys.executable\\)\")",
+      "Bash(where python3 *)",
+      "Bash(where python *)"
+    ]
+  }
+}

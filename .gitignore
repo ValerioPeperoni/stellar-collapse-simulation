@@ -1,0 +1,20 @@
+# Ambiente virtuale
+.venv/
+
+# Cache Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Cache pytest
+.pytest_cache/
+
+# Output rigenerabile della simulazione (GIF/PNG), rigenerato con
+# `python scripts/run_simulation.py <star_id>` — non tracciato perché
+# derivato, non sorgente (vedi README, sezione "Come eseguire la
+# simulazione").
+output/
+
+# OS
+.DS_Store
+Thumbs.db

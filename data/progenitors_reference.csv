@@ -1,0 +1,81 @@
+# Catalogo di riferimento dei progenitori stellari — aggiornato nel ciclo
+# "Integrazione catalogo reale" (successivo a Step 8; vedi STATUS.md) ed
+# esteso a 6 stelle + 1 voce proxy nel ciclo "Espansione catalogo +
+# Betelgeuse" (vedi STATUS.md per il dettaglio completo).
+#
+# PROVENIENZA PER CAMPO (non tutti i campi sono dati di letteratura — questa
+# distinzione e' intenzionale e va sempre preservata a valle):
+# - massa_zams_msun, massa_nucleo_msun, ye: dati di LETTERATURA, trascritti a
+#   mano da O'Connor & Ott (2011), "Black Hole Formation in Failing
+#   Core-Collapse Supernovae", ApJ 730, 70 (arXiv:1010.5550), TABELLA 1
+#   pag. 5 "Initial Models" (modelli s15WHW02/s20WHW02/s25WHW02/s30WHW02/
+#   s35WHW02/s40WHW02, metallicita' solare, dati originali di Woosley, Heger
+#   & Weaver 2002, Rev. Mod. Phys. 74, 1015 -- la stessa fonte della
+#   convenzione di naming s15/s20/... gia' in uso nel progetto).
+#   massa_nucleo_msun e' la massa del nucleo di ferro, definita in quella
+#   tabella come massa baryonica interna a ye=0.495 (nota (a) della
+#   Tabella 1); ye=0.495 e' la stessa soglia di definizione, non una misura
+#   per-stella indipendente (praticamente costante fra i modelli di quella
+#   survey). La Tabella 1 (sottoinsieme sWHW02, metallicita' solare)
+#   contiene ESATTAMENTE queste 7 masse ZAMS: 15/20/25/30/35/40/75 -- nessuna
+#   massa intermedia (es. 17 o 18) e' disponibile in questa fonte.
+# - densita_centrale_gcm3: NON da letteratura (nessuno dei paper controllati
+#   -- O'Connor & Ott 2011, Sukhbold & Woosley 2014 ApJ, Heger et al. 2003
+#   ApJ 591:288 -- tabula densita' centrale pre-collasso per stella
+#   nominata). Scelta come valore fisico plausibile per nuclei di ferro
+#   pre-collasso (stesso ordine di grandezza 1e9-1e10 g/cm^3 gia' usato nel
+#   catalogo placeholder originale; per s30/s35/s40 la scelta prosegue la
+#   stessa progressione aritmetica di s15/s20/s25, incremento di 2.5e9
+#   g/cm^3 ogni 5 Msun ZAMS -- coerente con la letteratura generale sul
+#   collasso di nuclei di ferro, non un valore di letteratura specifico).
+# - n_politropico, raggio_iniziale_km: DERIVATI INTERNAMENTE dal progetto
+#   stesso (collasso.eos.n_eff_chandrasekhar per n, collasso.lane_emden per
+#   il raggio), NON presi da letteratura: n_politropico =
+#   n_eff_chandrasekhar(densita_centrale_gcm3, ye) (indice politropico
+#   locale della EOS esatta di Chandrasekhar, Step 3, valutato alla densita'
+#   centrale scelta sopra); raggio_iniziale_km = R della soluzione di
+#   Lane-Emden per quell'n, fissata su (densita_centrale_gcm3,
+#   massa_nucleo_msun) tramite collasso.lane_emden.physical_profile (Step 2).
+#   Questi 4 parametri SONO mutuamente consistenti come singolo politropo di
+#   Lane-Emden by construction (nessun mismatch massa residuo).
+# - LIMITE FISICO VERIFICATO ESPLICITAMENTE per ogni stella: con ye=0.495,
+#   M_Ch=1.4270 Msun (collasso.eos.chandrasekhar_mass_msun). TUTTE le masse
+#   reali del nucleo (1.55/1.46/1.62/1.46/1.49/1.56 Msun) sono sopra M_Ch
+#   (108.6%/102.3%/113.5%/102.3%/104.4%/109.3%). Non esiste quindi, per
+#   nessuna stella, un vero equilibrio idrostatico a EOS di Chandrasekhar
+#   esatta (a qualunque densita' centrale, la massa di un tale equilibrio e'
+#   sempre < M_Ch) -- atteso e corretto: sono nuclei di ferro pre-collasso
+#   supra-Chandrasekhar per definizione. n_politropico e raggio_iniziale_km
+#   vanno intesi come un'APPROSSIMAZIONE dell'ultimo istante prima
+#   dell'innesco del collasso, non come una vera soluzione di equilibrio.
+#   Lo scarto K per-stella (collasso.eos.chandrasekhar_k_deviation_pct,
+#   quantifica questa approssimazione) e' esposto nell'output di
+#   scripts/run_simulation.py e nel disclaimer 2 di ogni esecuzione:
+#   s15=+6.73%, s20=+2.32%, s25=+9.52%, s30=+2.10%, s35=+3.43%, s40=+6.59%.
+# - nota_proxy (colonna opzionale, vuota per le 6 stelle sopra): NON vuota
+#   SOLO per "betelgeuse" -- vedi commento dedicato sotto, sopra la sua riga.
+# Colonne: id,massa_zams_msun,massa_nucleo_msun,densita_centrale_gcm3,raggio_iniziale_km,ye,n_politropico,fonte,nota_proxy
+id,massa_zams_msun,massa_nucleo_msun,densita_centrale_gcm3,raggio_iniziale_km,ye,n_politropico,fonte,nota_proxy
+s15,15.0,1.55,5.0000e9,1960.779611,0.495,2.96922161,massa/ye: O'Connor & Ott 2011 ApJ 730:70 Tabella 1 pag.5 (s15WHW02; dati WHW02 2002) -- densita_centrale: valore fisico plausibile (non letteratura) -- n_politropico/raggio_iniziale_km: derivati internamente (Lane-Emden Step2 + EOS Chandrasekhar Step3),
+s20,20.0,1.46,7.5000e9,1686.306888,0.495,2.97629373,massa/ye: O'Connor & Ott 2011 ApJ 730:70 Tabella 1 pag.5 (s20WHW02; dati WHW02 2002) -- densita_centrale: valore fisico plausibile (non letteratura) -- n_politropico/raggio_iniziale_km: derivati internamente (Lane-Emden Step2 + EOS Chandrasekhar Step3),
+s25,25.0,1.62,1.0000e10,1590.045254,0.495,2.98032431,massa/ye: O'Connor & Ott 2011 ApJ 730:70 Tabella 1 pag.5 (s25WHW02; dati WHW02 2002) -- densita_centrale: valore fisico plausibile (non letteratura) -- n_politropico/raggio_iniziale_km: derivati internamente (Lane-Emden Step2 + EOS Chandrasekhar Step3),
+s30,30.0,1.46,1.2500e10,1428.088984,0.495,2.98298172,massa/ye: O'Connor & Ott 2011 ApJ 730:70 Tabella 1 pag.5 (s30WHW02; dati WHW02 2002) -- densita_centrale: valore fisico plausibile (non letteratura) -- n_politropico/raggio_iniziale_km: derivati internamente (Lane-Emden Step2 + EOS Chandrasekhar Step3),
+s35,35.0,1.49,1.5000e10,1354.600260,0.495,2.98488902,massa/ye: O'Connor & Ott 2011 ApJ 730:70 Tabella 1 pag.5 (s35WHW02; dati WHW02 2002) -- densita_centrale: valore fisico plausibile (non letteratura) -- n_politropico/raggio_iniziale_km: derivati internamente (Lane-Emden Step2 + EOS Chandrasekhar Step3),
+s40,40.0,1.56,1.7500e10,1307.751822,0.495,2.98633659,massa/ye: O'Connor & Ott 2011 ApJ 730:70 Tabella 1 pag.5 (s40WHW02; dati WHW02 2002) -- densita_centrale: valore fisico plausibile (non letteratura) -- n_politropico/raggio_iniziale_km: derivati internamente (Lane-Emden Step2 + EOS Chandrasekhar Step3),
+# --- "betelgeuse": PROXY dichiarato, non un modello calcolato per Betelgeuse
+# specificamente. Riusa ESATTAMENTE i valori di s20WHW02 (riga s20 sopra --
+# stessa massa/ye/densita_centrale/n_politropico/raggio_iniziale_km) perche'
+# nessuna delle 7 masse ZAMS della Tabella 1 di O'Connor&Ott (15/20/25/30/
+# 35/40/75) e' piu' vicina alla stima reale della massa iniziale di
+# Betelgeuse. Stima reale verificata in letteratura (non presa a memoria):
+# 18-21 Msun (Joyce, Leung, Molnar, Ireland, Kobayashi & Nomoto 2020, ApJ
+# 902, 63, arXiv:2010.05941 -- "we report model-derived estimates for the
+# initial and present-day masses of Betelgeuse as approximately 18-21 Msun
+# and 16.5-19 Msun respectively"; il valore 16.5-19 Msun citato spesso in
+# letteratura divulgativa e' la massa ATTUALE, non quella ZAMS) e ~19 Msun
+# (Saio, Kondo, Ekstrom, Meynet & Georgy 2023, MNRAS 526, 2765,
+# arXiv:2306.00287 -- modelli con proprieta' di pulsazione compatibili
+# hanno massa attuale 11-12 Msun, 19 Msun a ZAMS). Entrambe le fonti
+# convergono su ZAMS~18-21 Msun: 20 (s20WHW02) e' il valore piu' vicino fra
+# quelli disponibili, con margine chiaro rispetto a 15 o 25.
+betelgeuse,20.0,1.46,7.5000e9,1686.306888,0.495,2.97629373,PROXY -- non una stella distinta: riusa s20WHW02 (O'Connor & Ott 2011 ApJ 730:70 Tabella 1 pag.5; dati WHW02 2002) come modello generico di ZAMS piu' vicina alla stima reale di Betelgeuse -- n_politropico/raggio_iniziale_km derivati internamente identici a s20 (stesso modello riusato) -- stima massa iniziale reale: 18-21 Msun (Joyce et al. 2020 ApJ 902:63) e ~19 Msun (Saio et al. 2023 MNRAS 526:2765 arXiv:2306.00287) -- nessuno dei 7 ZAMS disponibili in Tabella 1 e' piu' vicino di 20,proxy: modello generico WHW02 di massa piu' vicina; NON una ricostruzione della struttura interna specifica di Betelgeuse
