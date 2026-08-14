@@ -199,4 +199,4 @@ Dettaglio forense completo (decomposizione delle forze, esperimento isolante, tu
 
 ## Licenza
 
-MIT — vedi [LICENSE](LICENSE). Il file usa il testo standard MIT con un placeholder `[nome del titolare del copyright]` da sostituire: non ho inventato un nome, va inserito prima della pubblicazione.
+MIT — vedi [LICENSE](LICENSE). Copyright (c) 2026 Valerio Peperoni.
