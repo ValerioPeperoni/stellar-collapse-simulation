@@ -1,6 +1,10 @@
 # Simulazione numerica del collasso gravitazionale stellare
 
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ValerioPeperoni/stellar-collapse-simulation/blob/main/demo_colab.ipynb)
+
 Simulazione a simmetria sferica del collasso di nuclei stellari pre-supernova, inizializzata da parametri di stelle reali, con output sia numerico sia visivo.
+
+**Provalo subito senza installare nulla**: clicca il badge sopra per aprire [`demo_colab.ipynb`](demo_colab.ipynb) su Google Colab — clona il repository, installa le dipendenze e mette a disposizione un menu a tendina + un pulsante per lanciare l'intera simulazione, con grafici e animazioni mostrati direttamente nel browser.
 
 ## Indice
 
@@ -10,6 +14,7 @@ Simulazione a simmetria sferica del collasso di nuclei stellari pre-supernova, i
 - [Struttura del repository](#struttura-del-repository)
 - [Installazione](#installazione)
 - [Come eseguire la simulazione](#come-eseguire-la-simulazione)
+- [Demo su Google Colab (senza installare nulla)](#demo-su-google-colab-senza-installare-nulla)
 - [Esempio di output](#esempio-di-output)
 - [Script demo storici](#script-demo-storici)
 - [Test](#test)
@@ -94,6 +99,7 @@ STATUS.md          Log dettagliato di ogni ciclo di sviluppo
 VALIDATION.md       Confronto qualitativo con GR1D e letteratura
 CLAUDE.md           Regole e vincoli fisici non negoziabili del progetto
 LICENSE             MIT
+demo_colab.ipynb    Demo interattiva su Google Colab, nessun setup locale
 ```
 
 ## Installazione
@@ -123,6 +129,14 @@ Ogni esecuzione produce **sia** l'output numerico completo **sia** una visualizz
   - `collapse_<star_id>.gif` — animazione a linea (raggio di ogni shell vs frazione di massa racchiusa).
   - `collapse_disk_<star_id>.gif` — animazione **alternativa**: la stella disegnata come un disco 2D pieno, colorato per densità locale di shell (scala log), che si restringe nel tempo — pensata per dare l'impressione visiva di una stella che collassa, non di un grafico a linea. L'ultimo fotogramma dichiara esplicitamente, in sovrimpressione, che la simulazione termina lì e che nessun bounce è modellato.
   - `summary_<star_id>.png` — grafico a 3 pannelli: densità centrale vs tempo, velocità della shell più interna vs tempo, curva massa-raggio TOV con la massa del nucleo marcata.
+
+## Demo su Google Colab (senza installare nulla)
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ValerioPeperoni/stellar-collapse-simulation/blob/main/demo_colab.ipynb)
+
+[`demo_colab.ipynb`](demo_colab.ipynb) esegue il progetto interamente nel browser, senza setup locale: clona il repository, installa le dipendenze da `requirements.txt`, e mette a disposizione un menu a tendina per scegliere la stella e un solo pulsante (**▶ Avvia simulazione**) che lancia l'intera pipeline e mostra grafici e animazioni direttamente nel notebook (non solo salvati su disco).
+
+Il notebook **non modifica la fisica né il codice esistente**: chiama esclusivamente le funzioni già presenti nel repository (`run_full_simulation`, `animate_collapse`/`animate_collapse_disk`/`plot_summary`, la stessa funzione di stampa usata da `scripts/run_simulation.py`) — è un modo alternativo di eseguirlo, non una riscrittura.
 
 ## Esempio di output
 
